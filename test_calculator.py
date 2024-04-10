@@ -31,3 +31,8 @@ def test_power():
     assert calculator.power(2, 3) == 8
     assert calculator.power(5, 0) == 1
     assert calculator.power(0, 5) == 0
+    
+def test_logarithm():
+    calc = Calculator()
+    assert calc.logarithm(8, 2) == 3
+    assert calc.logarithm(1000, 10) == pytest.approx(3, rel=1e-9)

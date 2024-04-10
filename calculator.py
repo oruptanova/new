@@ -1,3 +1,5 @@
+import math
+
 class Calculator:
     def add(self, x, y):
         return x + y
@@ -16,6 +18,9 @@ class Calculator:
     def power(self, x, y):
         return x ** y
 
+    def logarithm(self, x, base):
+        return math.log(x, base)
+
 def main():
     calculator = Calculator()
     
@@ -26,13 +31,16 @@ def main():
         print("3. Multiply")
         print("4. Divide")
         print("5. Power")
-        print("6. Exit")
+        print("6. Logarithm")
+        print("7. Exit")
         
-        choice = input("Enter choice (1/2/3/4/5/6): ")
+        choice = input("Enter choice (1/2/3/4/5/6/7): ")
         
-        if choice in ['1', '2', '3', '4', '5']:
+        if choice in ['1', '2', '3', '4', '5', '6']:
             num1 = float(input("Enter first number: "))
-            num2 = float(input("Enter second number: "))
+            
+            if choice != '6':
+                num2 = float(input("Enter second number: "))
             
             if choice == '1':
                 print("Result: ", calculator.add(num1, num2))
@@ -47,7 +55,10 @@ def main():
                     print(e)
             elif choice == '5':
                 print("Result: ", calculator.power(num1, num2))
-        elif choice == '6':
+            elif choice == '6':
+                base = float(input("Enter the base for logarithm: "))
+                print("Result: ", calculator.logarithm(num1, base))
+        elif choice == '7':
             break
         else:
             print("Invalid input. Please try again.")
