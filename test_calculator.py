@@ -25,3 +25,9 @@ def test_divide():
     assert calculator.divide(-6, 3) == -2
     with pytest.raises(ValueError):
         calculator.divide(6, 0)
+        
+def test_power():
+    calculator = Calculator()
+    assert calculator.power(2, 3) == 8
+    assert calculator.power(5, 0) == 1
+    assert calculator.power(0, 5) == 0
