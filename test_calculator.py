@@ -1,38 +1,55 @@
 import pytest
+from pytest import approx
 from calculator import Calculator
 
-def test_add():
-    calculator = Calculator()
-    assert calculator.add(4, 6) == 10
-    assert calculator.add(-1, 1) == 0
-    assert calculator.add(0, 0) == 0
-
-def test_subtract():
-    calculator = Calculator()
-    assert calculator.subtract(5, 3) == 2
-    assert calculator.subtract(-1, 1) == -2
-    assert calculator.subtract(0, 0) == 0
-
-def test_multiply():
-    calculator = Calculator()
-    assert calculator.multiply(2, 3) == 6
-    assert calculator.multiply(-1, 1) == -1
-    assert calculator.multiply(0, 5) == 0
-
-def test_divide():
-    calculator = Calculator()
-    assert calculator.divide(6, 3) == 2
-    assert calculator.divide(-6, 3) == -2
-    with pytest.raises(ValueError):
-        calculator.divide(6, 0)
-        
-def test_power():
-    calculator = Calculator()
-    assert calculator.power(2, 3) == 8
-    assert calculator.power(5, 0) == 1
-    assert calculator.power(0, 5) == 0
-    
-def test_logarithm():
+@pytest.mark.parametrize("a, b, expected", [
+    (1, 2, 3),
+    (-1, 1, 0)
+])
+def test_add(a, b, expected):
     calc = Calculator()
-    assert calc.logarithm(8, 2) == 3
-    assert calc.logarithm(1000, 10) == pytest.approx(3, rel=1e-9)
+    assert calc.add(a, b) == expected
+
+@pytest.mark.parametrize("a, b, expected", [
+    (5, 2, 3),
+    (10, 5, 5)
+])
+def test_subtract(a, b, expected):
+    calc = Calculator()
+    assert calc.subtract(a, b) == expected
+
+@pytest.mark.parametrize("a, b, expected", [
+    (3, 4, 12),
+    (-2, 5, -10)
+])
+def test_multiply(a, b, expected):
+    calc = Calculator()
+    assert calc.multiply(a, b) == expected
+
+@pytest.mark.parametrize("a, b, expected", [
+    (10, 2, 5),
+    (10, 0, ValueError)
+])
+def test_divide(a, b, expected):
+    calc = Calculator()
+    if expected == ValueError:
+        with pytest.raises(ValueError):
+            calc.divide(a, b)
+    else:
+        assert calc.divide(a, b) == expected
+
+@pytest.mark.parametrize("a, b, expected", [
+    (2, 3, 8),
+    (5, 0, 1)
+])
+def test_power(a, b, expected):
+    calc = Calculator()
+    assert calc.power(a, b) == expected
+
+@pytest.mark.parametrize("a, b, expected", [
+    (8, 2, 3),
+    (1000, 10, 3)
+])
+def test_logarithm(a, b, expected):
+    calc = Calculator()
+    assert calc.logarithm(a, b) == approx(expected)
